@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BDwAS_projekt.Models;
+namespace BDwAS_projekt.Models.Dto;
 
-public class Comment()
+public class PostDto()
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -14,14 +14,19 @@ public class Comment()
 
     public string Content { get; set; }
 
+    public string Description { get; set; }
+
     public DateTime CreationDate { get; set; }
 
-    [BsonIgnore]
-    public Post Post { get; set; }
+    public Boolean IsSponsored { get; set; }
 
     [BsonIgnore]
-    public User Author { get; set; }
+    public Channel Channel { get; set; }
 
-    [NotMapped]
-    public string AuthorId { get; set; }
+    public List<Comment> Comments { get; set; }
+
+    public List<Rating> Ratings { get; set; }
+
+    public List<Image> Images { get; set; }
+    public List<File> Files { get; set; }
 }

@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BDwAS_projekt.Models;
+namespace BDwAS_projekt.Models.Dto;
 
-public class Comment()
+public class MessageDto()
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -14,14 +14,17 @@ public class Comment()
 
     public string Content { get; set; }
 
-    public DateTime CreationDate { get; set; }
+    public DateTime Date { get; set; }
 
     [BsonIgnore]
-    public Post Post { get; set; }
-
-    [BsonIgnore]
-    public User Author { get; set; }
+    public User Sender { get; set; }
 
     [NotMapped]
-    public string AuthorId { get; set; }
+    public string SenderId { get; set; }
+
+    [BsonIgnore]
+    public User Recipient { get; set; }
+
+    [NotMapped]
+    public string RecipientId { get; set; }
 }

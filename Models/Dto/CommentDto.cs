@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BDwAS_projekt.Models;
+namespace BDwAS_projekt.Models.Dto;
 
-public class Comment()
+public class CommentDto()
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

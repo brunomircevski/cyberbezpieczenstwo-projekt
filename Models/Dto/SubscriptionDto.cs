@@ -4,29 +4,15 @@ using System.Threading.Channels;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BDwAS_projekt.Models;
+namespace BDwAS_projekt.Models.Dto;
 
-public class Subscription()
+public class SubscriptionDto()
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    [Key]
-    public string Id { get; set; }
-
     public DateTime EndDate { get; set; }
     
     public DateTime StartDate { get; set; }
 
     public Boolean AutoRenew { get; set; }
 
-    [BsonIgnore]
-    public User User { get; set; }
-
-    [BsonIgnore]
-    public Channel Channel { get; set; }
-
-    [NotMapped]
     public string ChannelId { get; set; }
-
-    public List<Payment> Payments { get; set; }
 }

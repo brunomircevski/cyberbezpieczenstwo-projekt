@@ -7,7 +7,8 @@ namespace BDwAS_projekt.Models;
 
 public class Rating()
 {
-    [BsonIgnore]
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     [Key]
     public string Id { get; set; }
 

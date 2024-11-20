@@ -7,7 +7,8 @@ namespace BDwAS_projekt.Models;
 
 public class Post()
 {
-    [BsonIgnore]
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     [Key]
     public string Id { get; set; }
 

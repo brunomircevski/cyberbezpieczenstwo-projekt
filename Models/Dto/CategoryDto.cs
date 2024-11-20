@@ -4,23 +4,18 @@ using System.Threading.Channels;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BDwAS_projekt.Models;
+namespace BDwAS_projekt.Models.Dto;
 
-public class Plan()
+public class CategoryDto()
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
+    [BsonIgnore]
     [Key]
     public string Id { get; set; }
 
     public string Name { get; set; }
 
-    public int Days { get; set; }
-
-    public double Price { get; set; }
-
-    public double Discount { get; set; }
+    public int MinimumAge { get; set; }
 
     [BsonIgnore]
-    public Channel Channel { get; set; }
+    public List<Channel> Channels { get; set; }
 }
