@@ -52,5 +52,4 @@ public interface IDbContext
     public List<Message> GetMessagesFrom(string userId); //Zwraca wszystkie wiadomości wysłane przez użytkownika o danym userId
     public bool AddMessage(Message message);
     public bool DeleteMessage(string messageId);
-
 }
