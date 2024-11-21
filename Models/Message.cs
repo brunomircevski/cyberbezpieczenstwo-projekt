@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -22,6 +23,7 @@ public class Message()
     [NotMapped]
     public string SenderId { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public User Recipient { get; set; }
 

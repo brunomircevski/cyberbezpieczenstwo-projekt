@@ -4,6 +4,7 @@ using System.Threading.Channels;
 using Swashbuckle.AspNetCore.Annotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace BDwAS_projekt.Models;
 
@@ -24,6 +25,7 @@ public class Payment()
 
     public double Discount { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public Subscription Subscription { get; set; }
 }

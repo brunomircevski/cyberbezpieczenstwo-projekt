@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -20,6 +21,7 @@ public class LiveStream()
 
     public DateTime EndDate { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public Channel Channel { get; set; }
 }

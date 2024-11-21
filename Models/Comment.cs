@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -16,9 +17,11 @@ public class Comment()
 
     public DateTime CreationDate { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public Post Post { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public User Author { get; set; }
 

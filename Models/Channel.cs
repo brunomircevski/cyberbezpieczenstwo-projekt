@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -18,17 +19,23 @@ public class Channel()
 
     public DateTime CreationDate { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public List<Subscription> Subscriptions { get; set; }
 
+    [JsonIgnore]
     public List<Category> Categories { get; set; }
 
+    [JsonIgnore]
     public List<Post> Posts { get; set; }
 
+    [JsonIgnore]
     public List<LiveStream> Streams { get; set; }
 
+    [JsonIgnore]
     public List<Plan> Plans { get; set; }
 
+    [JsonIgnore]
     [BsonIgnore]
     public User Owner { get; set; }
 
