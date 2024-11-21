@@ -25,7 +25,7 @@ public class Channel()
 
     public List<Post> Posts { get; set; }
 
-    public List<Post> Streams { get; set; }
+    public List<LiveStream> Streams { get; set; }
 
     public List<Plan> Plans { get; set; }
 

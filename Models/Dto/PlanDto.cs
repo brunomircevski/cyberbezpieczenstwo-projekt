@@ -8,11 +8,6 @@ namespace BDwAS_projekt.Models.Dto;
 
 public class PlanDto()
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    [Key]
-    public string Id { get; set; }
-
     public string Name { get; set; }
 
     public int Days { get; set; }
@@ -20,7 +15,4 @@ public class PlanDto()
     public double Price { get; set; }
 
     public double Discount { get; set; }
-
-    [BsonIgnore]
-    public Channel Channel { get; set; }
 }

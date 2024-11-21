@@ -8,14 +8,7 @@ namespace BDwAS_projekt.Models.Dto;
 
 public class CategoryDto()
 {
-    [BsonIgnore]
-    [Key]
-    public string Id { get; set; }
-
     public string Name { get; set; }
 
     public int MinimumAge { get; set; }
-
-    [BsonIgnore]
-    public List<Channel> Channels { get; set; }
 }

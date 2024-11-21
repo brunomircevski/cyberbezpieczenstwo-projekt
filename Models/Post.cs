@@ -12,9 +12,9 @@ public class Post()
     [Key]
     public string Id { get; set; }
 
-    public string Content { get; set; }
+    public string Title { get; set; }
 
-    public string Description { get; set; }
+    public string Content { get; set; }
 
     public DateTime CreationDate { get; set; }
 
@@ -28,5 +28,5 @@ public class Post()
     public List<Rating> Ratings { get; set; }
 
     public List<Image> Images { get; set; }
-    public List<File> Files { get; set; }
+    public List<Attachment> Attachments { get; set; }
 }

@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BDwAS_projekt.Models;
 
-public class Stream()
+public class Attachment()
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -13,13 +13,11 @@ public class Stream()
     public string Id { get; set; }
 
     public string Name { get; set; }
-    
-    public string SavedPath { get; set; }
 
-    public DateTime StartDate { get; set; }
+    public string Path { get; set; }
 
-    public DateTime EndDate { get; set; }
+    public int Size { get; set; }
 
     [BsonIgnore]
-    public Channel Channel { get; set; }
+    public Post Post { get; set; }
 }

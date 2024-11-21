@@ -18,8 +18,8 @@ public class Rating()
     public Post Post { get; set; }
 
     [BsonIgnore]
-    public User User { get; set; }
+    public User Author { get; set; }
 
     [NotMapped]
-    public string UserId { get; set; }
+    public string AuthorId { get; set; }
 }

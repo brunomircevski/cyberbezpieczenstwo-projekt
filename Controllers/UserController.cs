@@ -37,7 +37,7 @@ public class UserController : Controller
     [HttpPost("")]
     public IActionResult AddUser([FromBody] UserDto userDto)
     {
-        if (userDto == null) return BadRequest("Subscription data is required.");
+        if (userDto == null) return BadRequest("User data is required.");
 
         User user = new()
         {
@@ -56,7 +56,7 @@ public class UserController : Controller
     }
 
     [HttpPut("{userId}")]
-    public IActionResult EditUser(string userId, [FromBody] UserDto userDto)
+    public IActionResult UpdateUser(string userId, [FromBody] UserDto userDto)
     {
         if (userId.Length != 24) return BadRequest("Id must be 24 characters long.");
 
@@ -87,7 +87,7 @@ public class UserController : Controller
         if (userId.Length != 24) return BadRequest("Id must be 24 characters long.");
 
         if (_db.DeleteUser(userId)) return Ok("User deleted.");
-        else return BadRequest("Failed to delete user.");
+        else return NotFound("Failed to delete user.");
     }
 
     [HttpPost("{userId}/Subscription")]
