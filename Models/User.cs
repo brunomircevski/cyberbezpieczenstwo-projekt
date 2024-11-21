@@ -36,9 +36,6 @@ public class User()
     [BsonIgnore] 
     public Channel Channel { get; set; }
 
-    [NotMapped]
-    public string ChannelId { get; set; }
-
     [BsonIgnore] 
     public List<Message> SendMessages { get; set; }
 
