@@ -41,4 +41,7 @@ public class User()
 
     [BsonIgnore] 
     public List<Message> ReceivedMessages { get; set; }
+
+    [BsonIgnore]
+    public List<Comment> Comments { get; set; }
 }

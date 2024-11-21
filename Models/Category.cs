@@ -18,4 +18,6 @@ public class Category()
 
     [BsonIgnore]
     public List<Channel> Channels { get; set; }
+
+
 }
