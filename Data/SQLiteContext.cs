@@ -779,22 +779,22 @@ public class SQLiteContext: DbContext, IDbContext
         modelBuilder.Entity<Post>()
             .HasOne(p => p.Channel)
             .WithMany(c => c.Posts)
-            .HasForeignKey(p => p.Id);
+            .HasForeignKey(p => p.ChannelId);
 
         modelBuilder.Entity<Payment>()
             .HasOne(p => p.Subscription)
             .WithMany(s => s.Payments)
-            .HasForeignKey(p => p.Id);
+            .HasForeignKey(p => p.SubscriptionId);
 
         modelBuilder.Entity<LiveStream>()
             .HasOne(ls => ls.Channel)
             .WithMany(c => c.Streams)
-            .HasForeignKey(ls => ls.Id);
+            .HasForeignKey(ls => ls.ChannelId);
 
         modelBuilder.Entity<Plan>()
             .HasOne(pl => pl.Channel)
             .WithMany(c => c.Plans)
-            .HasForeignKey(pl => pl.Id);
+            .HasForeignKey(pl => pl.ChannelId);
 
         modelBuilder.Entity<Channel>()
             .HasMany(c => c.Subscriptions)

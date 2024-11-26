@@ -20,6 +20,9 @@ public class Post()
     public DateTime CreationDate { get; set; }
 
     public Boolean IsSponsored { get; set; }
+    [JsonIgnore]
+    [BsonIgnore]
+    public string ChannelId { get; set; }
 
     [JsonIgnore]
     [BsonIgnore]

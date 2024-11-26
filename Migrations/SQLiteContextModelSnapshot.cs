@@ -38,7 +38,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Attachments");
+                    b.ToTable("Attachments", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Category", b =>
@@ -54,7 +54,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Channel", b =>
@@ -79,7 +79,7 @@ namespace BDwAS_projekt.Migrations
                     b.HasIndex("OwnerId")
                         .IsUnique();
 
-                    b.ToTable("Channels");
+                    b.ToTable("Channels", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Comment", b =>
@@ -105,7 +105,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Image", b =>
@@ -123,7 +123,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.LiveStream", b =>
@@ -150,7 +150,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("ChannelId");
 
-                    b.ToTable("LiveStreams");
+                    b.ToTable("LiveStreams", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Message", b =>
@@ -176,7 +176,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Payment", b =>
@@ -206,7 +206,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Plan", b =>
@@ -233,7 +233,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("ChannelId");
 
-                    b.ToTable("Plans");
+                    b.ToTable("Plans", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Post", b =>
@@ -265,7 +265,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Rating", b =>
@@ -288,7 +288,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Subscription", b =>
@@ -317,7 +317,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.User", b =>
@@ -342,7 +342,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CategoryChannel", b =>
@@ -357,7 +357,7 @@ namespace BDwAS_projekt.Migrations
 
                     b.HasIndex("ChannelsId");
 
-                    b.ToTable("CategoryChannel");
+                    b.ToTable("CategoryChannel", (string)null);
                 });
 
             modelBuilder.Entity("BDwAS_projekt.Models.Attachment", b =>

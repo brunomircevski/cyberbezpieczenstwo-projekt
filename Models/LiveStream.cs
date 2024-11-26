@@ -20,6 +20,9 @@ public class LiveStream()
     public DateTime StartDate { get; set; }
 
     public DateTime EndDate { get; set; }
+    [JsonIgnore]
+    [BsonIgnore]
+    public string ChannelId { get; set; }
 
     [JsonIgnore]
     [BsonIgnore]

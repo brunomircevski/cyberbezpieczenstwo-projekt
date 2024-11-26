@@ -24,7 +24,9 @@ public class Payment()
     public double PaidPrice { get; set; }
 
     public double Discount { get; set; }
-
+    [JsonIgnore]
+    [BsonIgnore]
+    public string SubscriptionId { get; set; }
     [JsonIgnore]
     [BsonIgnore]
     public Subscription Subscription { get; set; }

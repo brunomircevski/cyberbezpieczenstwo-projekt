@@ -21,6 +21,9 @@ public class Plan()
     public double Price { get; set; }
 
     public double Discount { get; set; }
+    [JsonIgnore]
+    [BsonIgnore]
+    public string ChannelId { get; set; }
 
     [JsonIgnore]
     [BsonIgnore]
