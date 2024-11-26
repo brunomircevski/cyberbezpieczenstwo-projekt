@@ -776,6 +776,30 @@ public class SQLiteContext: DbContext, IDbContext
             .WithMany(c => c.Subscriptions)
             .HasForeignKey(s => s.ChannelId);
 
+        modelBuilder.Entity<Post>()
+            .HasOne(p => p.Channel)
+            .WithMany(c => c.Posts)
+            .HasForeignKey(p => p.Id);
+
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Subscription)
+            .WithMany(s => s.Payments)
+            .HasForeignKey(p => p.Id);
+
+        modelBuilder.Entity<LiveStream>()
+            .HasOne(ls => ls.Channel)
+            .WithMany(c => c.Streams)
+            .HasForeignKey(ls => ls.Id);
+
+        modelBuilder.Entity<Plan>()
+            .HasOne(pl => pl.Channel)
+            .WithMany(c => c.Plans)
+            .HasForeignKey(pl => pl.Id);
+
+        modelBuilder.Entity<Channel>()
+            .HasMany(c => c.Subscriptions)
+            .WithOne(s => s.Channel)
+            .HasForeignKey(s => s.ChannelId);
     }
 
 }
