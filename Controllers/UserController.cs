@@ -122,11 +122,14 @@ public class UserController : Controller
         Payment payment = new()
         {
             Id = ObjectId.GenerateNewId().ToString(),
-            AddedDays = paymentDto.AddedDays,
-            FullPrice = paymentDto.FullPrice,
-            Discount = paymentDto.Discount,
-            PaidPrice = paymentDto.FullPrice * (1.0 - paymentDto.Discount / 100.0),
-            PaymentDate = DateTime.Now
+            Details = new PaymentDetails
+            {
+                AddedDays = paymentDto.AddedDays,
+                FullPrice = paymentDto.FullPrice,
+                Discount = paymentDto.Discount,
+                PaidPrice = paymentDto.FullPrice * (1.0d - paymentDto.Discount / 100.0d),
+                PaymentDate = DateTime.Now
+            }
         };
 
         if (_db.AddPayment(payment, subscriptionId, userId)) return Ok(payment);

@@ -9,9 +9,16 @@ builder.Services.AddSwaggerGen();
 
 //Wybór bazy danych jako IDbContext
 
-builder.Services.AddDbContext<IDbContext, SQLiteContext>(
-    options => options.UseSqlite("Data Source=database.db")
+//builder.Services.AddDbContext<IDbContext, SQLiteContext>(
+//    options => options.UseSqlite("Data Source=database.db")
+//);
+
+
+
+builder.Services.AddDbContext<IDbContext, PostgreContext>(options =>
+    options.UseNpgsql("Host=localhost;Database=bdwas;Username=postgres;Password=qwerty")
 );
+
 
 
 //builder.Services.AddScoped<IDbContext, MongoContext>(provider =>

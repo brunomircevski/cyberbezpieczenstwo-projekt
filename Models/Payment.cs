@@ -15,17 +15,20 @@ public class Payment()
     [Key]
     public string Id { get; set; }
 
-    public DateTime PaymentDate { get; set; }
+    [Column(TypeName = "jsonb")]
+    public PaymentDetails Details { get; set; }
 
-    public int AddedDays { get; set; }
-
-    public double FullPrice { get; set; }
-
-    public double PaidPrice { get; set; }
-
-    public double Discount { get; set; }
+    public string SubscriptionId { get; set; }
 
     [JsonIgnore]
     [BsonIgnore]
     public Subscription Subscription { get; set; }
+
+
+    public DateTime PaymentDate => Details.PaymentDate;
+    public int AddedDays => Details.AddedDays;
+    public double FullPrice => Details.FullPrice;
+    public double PaidPrice => Details.PaidPrice;
+    public double Discount => Details.Discount;
+
 }
