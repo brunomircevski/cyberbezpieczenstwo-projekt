@@ -18,7 +18,6 @@ builder.Services.AddScoped<IDbContext, MongoContext>(provider =>
     new MongoContext("mongodb://localhost:27017", "bdwas")
 );
 
-
 var app = builder.Build();
 
 app.UseSwagger();

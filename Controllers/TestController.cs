@@ -83,6 +83,58 @@ public class TestController : Controller
         });
     }
 
+    [HttpPut("Users")]
+    public IActionResult UpdateUsers(int number)
+    {
+        var users = _db.GetUsers();
+        int actualCount = Math.Min(number, users.Count);
+
+        // Pregenerate email updates
+        var randomEmails = new List<string>();
+        for (int i = 0; i < actualCount; i++)
+        {
+            randomEmails.Add($"{GenerateRandomWord()}@example.com");
+        }
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
+        for (int i = 0; i < actualCount; i++)
+        {
+            users[i].Email = randomEmails[i];
+            _db.UpdateUser(users[i]);
+        }
+
+        stopwatch.Stop();
+
+        return Ok(new
+        {
+            Message = $"Updated {actualCount} users' emails.",
+            TimeMilliseconds = stopwatch.ElapsedMilliseconds
+        });
+    }
+
+    [HttpDelete("Users")]
+    public IActionResult DeleteUsers(int number)
+    {
+        var users = _db.GetUsers();
+        int actualCount = Math.Min(number, users.Count);
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        for (int i = 0; i < actualCount; i++)
+        {
+            _db.DeleteUser(users[i].Id);
+        }
+
+        stopwatch.Stop();
+
+        return Ok(new
+        {
+            Message = $"Deleted {actualCount} users.",
+            TimeMilliseconds = stopwatch.ElapsedMilliseconds
+        });
+    }
+
+
     [HttpGet("Users")]
     public IActionResult GetUsers()
     {
@@ -96,11 +148,11 @@ public class TestController : Controller
         return Ok(new { Message = "Got " + users.Count + " users.", TimeMiliseconds = stopwatch.ElapsedMilliseconds });
     }
 
-    private static List<User> GenerateUsers(int N)
+    private static List<User> GenerateUsers(int number)
     {
         var users = new List<User>();
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < number; i++)
         {
             string firstName = GenerateRandomWord();
             string lastName = GenerateRandomWord();
@@ -120,11 +172,11 @@ public class TestController : Controller
         return users;
     }
 
-    private static List<Message> GenerateMessages(int N)
+    private static List<Message> GenerateMessages(int number)
     {
         var messages = new List<Message>();
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < number; i++)
         {
             messages.Add(new Message
             {
