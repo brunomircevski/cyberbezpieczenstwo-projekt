@@ -14,6 +14,4 @@ public class User()
     public List<Message> OwnMessages { get; set; }
 
     public List<Message> EditableMessages { get; set; }
-
-    public bool IsAdmin { get; set; }
 }

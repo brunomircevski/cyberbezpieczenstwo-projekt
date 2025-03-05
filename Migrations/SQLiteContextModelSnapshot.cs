@@ -45,9 +45,6 @@ namespace Cyberbezpieczenstwo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 

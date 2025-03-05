@@ -17,18 +17,6 @@ public class AdminController : Controller
         _db = db;
     }
 
-    [HttpPost("toggle")]
-    public IActionResult ToggleAdmin(int userId)
-    {
-        User user = _db.Users.Where(u => u.Id == userId).FirstOrDefault();
-        if(user is null) return NotFound(new { Message = "User not found!" });
-
-        user.IsAdmin = !user.IsAdmin;
-        _db.SaveChanges();
-
-        return Ok(user);
-    }
-
     [HttpGet("users")]
     public IActionResult GetAllUsers()
     {
