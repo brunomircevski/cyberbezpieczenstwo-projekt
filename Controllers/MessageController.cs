@@ -1,65 +1,46 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using BDwAS_projekt.Models;
-using BDwAS_projekt.Models.Dto;
-using BDwAS_projekt.Data;
-using MongoDB.Bson;
+using Cyberbezpieczenstwo.Models;
+using Cyberbezpieczenstwo.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace BDwAS_projekt.Controllers;
+namespace Cyberbezpieczenstwo.Controllers;
 
 [ApiController]
 [Route("Message")]
 public class MessageController : Controller
 {
-    private readonly IDbContext _db;
+    private readonly SQLiteContext _db;
 
-    public MessageController(IDbContext db)
+    public MessageController(SQLiteContext db)
     {
         _db = db;
     }
 
-    [HttpGet("To/{userId}")]
-    public IActionResult GetMessagesTo(string userId)
+    [HttpGet]
+    public IActionResult GetAll()
     {
-        if (userId.Length != 24) return BadRequest("Id must be 24 characters long.");
-        List<Message> messages = _db.GetMessagesTo(userId);
-
-        return Ok(messages);
+        //Get all messages
+        return Ok(new List<Message>([new Message() { Id = 1, Content = "Nie ma absolutnie żadncyh dowódów, aby A...", Date = DateTime.Now, Sender = new User() { Id = 1, Login = "JKM" } }]));
     }
 
-    [HttpGet("From/{userId}")]
-    public IActionResult GetMessagesFrom(string userId)
+    [HttpPost]
+    public IActionResult Send(string token, string message)
     {
-        if (userId.Length != 24) return BadRequest("Id must be 24 characters long.");
-        List<Message> messages = _db.GetMessagesFrom(userId);
-
-        return Ok(messages);
+        //Create new message, return it with new id
+        return Ok(new Message() { Id = 1, Content = "Nie ma absolutnie żadncyh dowódów, aby A...", Date = DateTime.Now, Sender = new User() { Id = 1, Login = "JKM" }});
     }
 
-    [HttpPost("")]
-    public IActionResult AddMessage([FromBody] MessageDto messageDto)
+    [HttpPut("/{messageId}")]
+    public IActionResult Update(string token, string messageId, string message)
     {
-        if (messageDto == null) return BadRequest("Message data is required.");
-
-        Message message = new()
-        {
-            Id = ObjectId.GenerateNewId().ToString(),
-            Content = messageDto.Content,
-            SenderId = messageDto.SenderId,
-            RecipientId = messageDto.RecipientId,
-            Date = DateTime.Now
-        };
-
-        if (_db.AddMessage(message)) return Ok(message);
-        else return BadRequest("Failed to add message.");
+        //Update existing message by id, return it
+        return Ok(new Message() { Id = 1, Content = "Nie ma absolutnie żadncyh dowódów, aby A...", Date = DateTime.Now, Sender = new User() { Id = 1, Login = "JKM" }});
     }
 
-    [HttpDelete("{messageId}")]
-    public IActionResult DeleteMessage(string messageId)
+    [HttpDelete("/{messageId}")]
+    public IActionResult Delete(string token, string messageId)
     {
-        if (messageId.Length != 24) return BadRequest("Id must be 24 characters long.");
-
-        if (_db.DeleteMessage(messageId)) return Ok("Message deleted.");
-        else return NotFound("Failed to delete messageId.");
+        //Delete message by id
+        return Ok();
     }
 }

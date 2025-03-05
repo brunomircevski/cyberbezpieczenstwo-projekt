@@ -1,4 +1,4 @@
-using BDwAS_projekt.Data;
+using Cyberbezpieczenstwo.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,15 +7,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Wybór bazy danych jako IDbContext
-
-//builder.Services.AddDbContext<IDbContext, SQLiteContext>(
-//    options => options.UseSqlite("Data Source=database.db")
-//);
-
-
-builder.Services.AddScoped<IDbContext, MongoContext>(provider =>
-    new MongoContext("mongodb://localhost:27017", "bdwas")
+builder.Services.AddDbContext<SQLiteContext>(
+    options => options.UseSqlite("Data Source=database.db")
 );
 
 var app = builder.Build();
