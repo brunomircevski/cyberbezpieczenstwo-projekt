@@ -1,4 +1,5 @@
 using Cyberbezpieczenstwo.Data;
+using Cyberbezpieczenstwo.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SQLiteContext>(
     options => options.UseSqlite("Data Source=database.db")
 );
+
+builder.Services.AddSingleton<AccountService>();
 
 var app = builder.Build();
 

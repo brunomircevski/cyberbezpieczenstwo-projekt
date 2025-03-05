@@ -7,9 +7,13 @@ public class User()
     [Key]
     public int Id { get; set; }
 
-    public string Login { get; set; }
+    public string Username { get; set; }
 
     public string Password { get; set; }
 
-    public List<Message> Messages { get; set; }
+    public List<Message> OwnMessages { get; set; }
+
+    public List<Message> EditableMessages { get; set; }
+
+    public bool IsAdmin { get; set; }
 }

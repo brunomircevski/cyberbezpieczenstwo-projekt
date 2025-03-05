@@ -12,4 +12,8 @@ public class Message()
     public DateTime Date { get; set; }
 
     public User Sender { get; set; }
+
+    public int SenderId { get; set; } 
+
+    public List<User> Editors { get; set; }
 }

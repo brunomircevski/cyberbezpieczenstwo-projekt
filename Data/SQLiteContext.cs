@@ -3,20 +3,25 @@ using Cyberbezpieczenstwo.Models;
 
 namespace Cyberbezpieczenstwo.Data;
 
-public class SQLiteContext: DbContext
+public class SQLiteContext(DbContextOptions<SQLiteContext> options) : DbContext(options)
 {
-    private readonly ILogger<SQLiteContext> _logger;
-
-    private DbSet<Message> Messages { get; set; }
-    private DbSet<User> Users { get; set; }
-
-    public SQLiteContext(DbContextOptions<SQLiteContext> options, ILogger<SQLiteContext> logger) : base(options)
-    {
-        _logger = logger;
-    }
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Configure the one-to-many relationship for OwnMessages (User -> Message)
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.OwnMessages)
+            .WithOne(m => m.Sender)
+            .HasForeignKey(m => m.SenderId);
+
+        // Configure the many-to-many relationship for EditableMessages (User <-> Message)
+        modelBuilder.Entity<Message>()
+            .HasMany(m => m.Editors)
+            .WithMany(u => u.EditableMessages)
+            .UsingEntity(j => j.ToTable("MessageEditors"));
+
         base.OnModelCreating(modelBuilder);
     }
 
