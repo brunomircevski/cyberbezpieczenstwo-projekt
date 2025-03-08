@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Cyberbezpieczenstwo.Models;
@@ -17,5 +18,11 @@ public class Message()
 
     public int SenderId { get; set; }
 
-    public List<User> Editors { get; set; }
+    [JsonIgnore]
+    public List<User> Editors { get; set; } = [];
+
+    [NotMapped]
+    [JsonInclude]
+    public List<int> EditorsId => Editors.Select(e => e.Id).ToList() ?? [];
+
 }

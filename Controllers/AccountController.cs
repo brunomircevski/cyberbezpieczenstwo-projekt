@@ -80,7 +80,11 @@ public class AccountController : Controller
         int userId = _accountService.GetUserId(token);
         if (userId == 0) return NotFound(new { Message = "Invalid token!" });
 
-        User user = _db.Users.Where(u => u.Id == userId).FirstOrDefault();
+        User user = _db.Users
+            .Where(u => u.Id == userId)
+            .Include(u => u.OwnMessages)
+            .Include(u => u.EditableMessages)
+            .FirstOrDefault();
         if (user is null) return NotFound(new { Message = "User not found!" });
 
         return Ok(user);

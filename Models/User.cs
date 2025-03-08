@@ -11,7 +11,7 @@ public class User()
 
     public string Password { get; set; }
 
-    public List<Message> OwnMessages { get; set; }
+    public List<Message> OwnMessages { get; set; } = [];
 
-    public List<Message> EditableMessages { get; set; }
+    public List<Message> EditableMessages { get; set; } = [];
 }
