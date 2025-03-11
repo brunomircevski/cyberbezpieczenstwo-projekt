@@ -36,8 +36,48 @@ public class AccountController : Controller
     [HttpPost("login")]
     public IActionResult Login(string username, string password)
     {
-        User user = _db.Users.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
-        if (user is null) return NotFound(new { Message = "User not found!" });
+        User user = _db.Users.Where(u => u.Username == username).FirstOrDefault();
+        if (user is null)
+        {
+            //User not found in db
+            return BadRequest(new { Message = "Invalid login or password" });
+        }
+
+        if (user.IsLocked)
+        {
+            return BadRequest(new { Message = "Account locked!" });
+        }
+
+        if (user.FailedLoginsCounter > 0 && user.LastFailedLogin.HasValue)
+        {
+            int lockoutTime = user.FailedLoginsCounter * 10; // liczba nieudanych prób * 10 sekund
+            TimeSpan timeSinceLastFailed = DateTime.Now - user.LastFailedLogin.Value;
+
+            if (timeSinceLastFailed.TotalSeconds < lockoutTime)
+            {
+                int remainingTime = lockoutTime - (int)timeSinceLastFailed.TotalSeconds;
+                return BadRequest(new { Message = $"Try again in {remainingTime} seconds." });
+            }
+        }
+
+        if (user.Password != password)
+        {
+            //User found, password incorrect
+            user.LastFailedLogin = DateTime.Now;
+
+            if (user.MaxFailedLogins == ++user.FailedLoginsCounter)
+            {
+                user.IsLocked = true;
+            }
+
+            _db.SaveChanges();
+
+            return BadRequest(new { Message = "Invalid login or password" });
+        }
+
+        user.LastLogin = DateTime.Now;
+        user.FailedLoginsCounter = 0;
+        _db.SaveChanges();
 
         string token = _accountService.GetToken(user.Id);
         return Ok(new { Message = "Welcome, " + user.Username, Token = token });
@@ -65,7 +105,7 @@ public class AccountController : Controller
         if (user is null) return NotFound(new { Message = "User not found!" });
 
         _accountService.Logout(token);
-        
+
         _db.Users.Remove(user);
         _db.SaveChanges();
 
@@ -86,6 +126,22 @@ public class AccountController : Controller
             .Include(u => u.EditableMessages)
             .FirstOrDefault();
         if (user is null) return NotFound(new { Message = "User not found!" });
+
+        return Ok(user);
+    }
+
+    [HttpPost("maxFailedLogins")]
+    public IActionResult SetMaxFailedLogins(string token, int num)
+    {
+        if (String.IsNullOrEmpty(token)) return NotFound(new { Message = "Invalid token!" });
+        int userId = _accountService.GetUserId(token);
+        if (userId == 0) return NotFound(new { Message = "Invalid token!" });
+
+        User user = _db.Users.Where(u => u.Id == userId).FirstOrDefault();
+        if (user is null) return NotFound(new { Message = "User not found!" });
+
+        user.MaxFailedLogins = num;
+        _db.SaveChanges();
 
         return Ok(user);
     }

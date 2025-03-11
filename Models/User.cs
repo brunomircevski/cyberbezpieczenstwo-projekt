@@ -14,4 +14,14 @@ public class User()
     public List<Message> OwnMessages { get; set; } = [];
 
     public List<Message> EditableMessages { get; set; } = [];
+    
+    public bool IsLocked { get; set; }
+
+    public int MaxFailedLogins { get; set; }
+
+    public int FailedLoginsCounter { get; set; }
+
+    public DateTime? LastLogin { get; set; }
+
+    public DateTime? LastFailedLogin { get; set; }
 }
