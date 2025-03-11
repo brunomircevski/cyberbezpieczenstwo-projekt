@@ -25,9 +25,7 @@ public class MessageController : Controller
         var messages = _db.Messages
             .Include(m => m.Editors)
             .ToList();
-        // return Ok(new List<Message>([new Message() { Id = 1, Content = "Nie ma absolutnie żadncyh dowódów, aby A...", Date = DateTime.Now, Sender = new User() { Id = 1, Username = "JKM" } }]));
         return Ok(messages);
-
     }
 
     [HttpPost]
