@@ -12,11 +12,14 @@ public class AccountController : Controller
 {
     private readonly SQLiteContext _db;
     private readonly AccountService _accountService;
+    private readonly LogService _logService;
 
-    public AccountController(SQLiteContext db, AccountService accountService)
+
+    public AccountController(SQLiteContext db, AccountService accountService, LogService logService)
     {
         _db = db;
         _accountService = accountService;
+        _logService = logService;
     }
 
     [HttpPost("register")]
@@ -39,7 +42,7 @@ public class AccountController : Controller
         User user = _db.Users.Where(u => u.Username == username).FirstOrDefault();
         if (user is null)
         {
-            //User not found in db
+            _logService.LogNonExistingUserLoginAttempt(username);
             return BadRequest(new { Message = "Invalid login or password" });
         }
 
@@ -65,6 +68,8 @@ public class AccountController : Controller
             //User found, password incorrect
             user.LastFailedLogin = DateTime.Now;
 
+            _logService.LogFailedLoginWithCounter(username, user.FailedLoginsCounter, user.LastFailedLogin.Value);
+
             if (user.MaxFailedLogins == ++user.FailedLoginsCounter)
             {
                 user.IsLocked = true;
@@ -77,6 +82,9 @@ public class AccountController : Controller
 
         user.LastLogin = DateTime.Now;
         user.FailedLoginsCounter = 0;
+
+        _logService.LogSuccessfulLogin(username, user.LastLogin.Value);
+
         _db.SaveChanges();
 
         string token = _accountService.GetToken(user.Id);

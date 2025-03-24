@@ -1,0 +1,8 @@
+[24.03.2025 19:43:17] LOGIN ATTEMPT for NON-EXISTING USER: KUUURWA
+[24.03.2025 20:10:37] LOGIN ATTEMPT for NON-EXISTING USER: kurwiszonek
+[24.03.2025 20:11:50] SUCCESSFUL LOGIN for user: dominik
+[24.03.2025 20:12:27] FAILED LOGIN for user: dominik
+[24.03.2025 20:12:27] FAILED LOGIN for user: dominik. Failed attempts since last success: 0
+[24.03.2025 20:12:38] FAILED LOGIN for user: dominik
+[24.03.2025 20:12:38] FAILED LOGIN for user: dominik. Failed attempts since last success: 1
+[24.03.2025 20:13:07] FAILED LOGIN for user: dominik. Failed attempts since last success: 2
