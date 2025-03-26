@@ -4,6 +4,7 @@
 ## Get latest from `dotnet new gitignore`
 
 *.db
+login_logs.txt
 
 # dotenv files
 .env

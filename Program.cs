@@ -14,6 +14,7 @@ builder.Services.AddDbContext<SQLiteContext>(
 
 builder.Services.AddSingleton<AccountService>();
 builder.Services.AddSingleton<LogService>();
+builder.Services.AddSingleton<PasswordService>();
 
 var app = builder.Build();
 

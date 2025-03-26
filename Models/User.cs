@@ -9,7 +9,9 @@ public class User()
 
     public string Username { get; set; }
 
-    public string Password { get; set; }
+    public List<PasswordFragment> PasswordFragments { get; set; }
+
+    public int NextFragmentIndex { get; set; }
 
     public List<Message> OwnMessages { get; set; } = [];
 

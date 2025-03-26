@@ -13,13 +13,14 @@ public class AccountController : Controller
     private readonly SQLiteContext _db;
     private readonly AccountService _accountService;
     private readonly LogService _logService;
+    private readonly PasswordService _passwordService;
 
-
-    public AccountController(SQLiteContext db, AccountService accountService, LogService logService)
+    public AccountController(SQLiteContext db, AccountService accountService, LogService logService, PasswordService passwordService)
     {
         _db = db;
         _accountService = accountService;
         _logService = logService;
+        _passwordService = passwordService;
     }
 
     [HttpPost("register")]
@@ -27,23 +28,43 @@ public class AccountController : Controller
     {
         if (_db.Users.Any(u => u.Username == username)) return BadRequest(new { Message = "Username already taken!" });
 
+        if (password.Length < 8 || password.Length > 16) return BadRequest(new { Message = "Password must be 8-16 characters long!" });
+
         int newId = _db.Users.Any() ? _db.Users.Max(u => u.Id) + 1 : 1;
-        User newUser = new() { Id = newId, Username = username, Password = password };
+        User newUser = new()
+        {
+            Id = newId,
+            Username = username,
+            PasswordFragments = _passwordService.GenerateFragments(password),
+            NextFragmentIndex = 0
+        };
 
         _db.Users.Add(newUser);
         _db.SaveChanges();
 
+        newUser.PasswordFragments = null;
+
         return Ok(newUser);
     }
 
-    [HttpPost("login")]
-    public IActionResult Login(string username, string password)
+    [HttpGet("login")]
+    public IActionResult GetPasswordFragment(string username)
     {
-        User user = _db.Users.Where(u => u.Username == username).FirstOrDefault();
+        User user = _db.Users.Include(u => u.PasswordFragments).Where(u => u.Username == username).FirstOrDefault();
+
+        if (user is null) return BadRequest(new { Message = "User not found!" });
+
+        return Ok(user.PasswordFragments[user.NextFragmentIndex].Pattern);
+    }
+
+    [HttpPost("login")]
+    public IActionResult Login(string username, string passwordFragment)
+    {
+        User user = _db.Users.Include(u => u.PasswordFragments).Where(u => u.Username == username).FirstOrDefault();
         if (user is null)
         {
             _logService.LogNonExistingUserLoginAttempt(username);
-            return BadRequest(new { Message = "Invalid login or password" });
+            return BadRequest(new { Message = "Invalid login or password USER NOT FOUND" });
         }
 
         if (user.IsLocked)
@@ -63,7 +84,7 @@ public class AccountController : Controller
             }
         }
 
-        if (user.Password != password)
+        if (!_passwordService.VerifyPassword(user, passwordFragment)) //If password not correct
         {
             //User found, password incorrect
             user.LastFailedLogin = DateTime.Now;
@@ -82,6 +103,10 @@ public class AccountController : Controller
 
         user.LastLogin = DateTime.Now;
         user.FailedLoginsCounter = 0;
+
+        //New random password fragment
+        Random random = new();
+        user.NextFragmentIndex = random.Next(0, 10); ;
 
         _logService.LogSuccessfulLogin(username, user.LastLogin.Value);
 
