@@ -47,6 +47,29 @@ public class AccountController : Controller
         return Ok(newUser);
     }
 
+    [HttpPut("changePassword")]
+    public IActionResult ChangePassword(string token, string oldPassword, string newPassword)
+    {
+        if (String.IsNullOrEmpty(token)) return NotFound(new { Message = "Invalid token!" });
+        int userId = _accountService.GetUserId(token);
+        if (userId == 0) return NotFound(new { Message = "Invalid token!" });
+
+        User user = _db.Users.Include(u => u.PasswordFragments).Where(u => u.Id == userId).FirstOrDefault();
+        if (user is null) return NotFound(new { Message = "User not found!" });
+
+        if (!_passwordService.VerifyPassword(user, oldPassword)) return BadRequest(new { Message = "Old password is incorrect!" });
+
+        if (newPassword.Length < 8 || newPassword.Length > 16) return BadRequest(new { Message = "New password must be 8-16 characters long!" });
+
+        //if (_passwordService.VerifyPassword(user, newPassword)) return BadRequest(new { Message = "New password can not be same as old password!" }); // sprawdzenie nowego hasła
+
+        user.PasswordFragments = _passwordService.GenerateFragments(newPassword);
+        _db.Update(user);
+        _db.SaveChanges();
+
+        return Ok(new { Message = "New password has been changed successfully! Largentina!" });
+    }
+
     [HttpGet("login")]
     public IActionResult GetPasswordFragment(string username)
     {
